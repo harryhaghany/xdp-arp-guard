@@ -1,6 +1,6 @@
 # xdp-arp-guard
 
-An XDP kernel program that detects ARP spoofing attacks in real time by intercepting packets at the network driver level — before the kernel processes them.
+An XDP kernel program that detects ARP spoofing attacks in real time by intercepting packets at the network driver level before the kernel processes them.
 
 ---
 
