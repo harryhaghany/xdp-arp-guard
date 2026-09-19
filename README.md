@@ -6,7 +6,7 @@ An XDP kernel program that detects ARP spoofing attacks in real time by intercep
 
 ## Background
 
-Reading about ARP in *Computer Networks: A Top-Down Approach* (Kurose & Ross), I kept thinking about what the protocol actually assumes: that every device on a network has a unique MAC address, and that the ARP table is a source of truth. The question that formed in my head was simple — what actually happens if that assumption breaks?
+Reading about ARP in *Computer Networks: A Top-Down Approach* (Kurose & Ross), I kept thinking about what the protocol actually assumes: that every device on a network has a unique MAC address, and that the ARP table is a source of truth. The question that formed in my head was simple: what actually happens if that assumption breaks?
 
 So I changed my laptop's MAC address to match another device on my home network and watched both connections fall apart in real time. The router couldn't decide where to send traffic. Both devices fought over the same identity.
 
@@ -52,9 +52,7 @@ store binding   →   pass quietly    →   ALERT: spoof detected
 
 ## Why XDP
 
-XDP (eXpress Data Path) is a Linux kernel hook that fires at the network driver level — before the kernel allocates socket buffers, before any socket processing, before any userspace program sees the packet. Programs written in restricted C are compiled to BPF bytecode, verified by the kernel verifier for safety and memory correctness, then loaded directly into the driver receive path.
-
-This is the same architectural layer that professional network recording appliances use for zero-packet-loss capture. Your detection logic runs on every single packet with near-zero overhead.
+XDP (eXpress Data Path) is a Linux kernel hook that fires at the network driver level before the kernel allocates socket buffers, before any socket processing, before any userspace program sees the packet. Programs written in restricted C are compiled to BPF bytecode, verified by the kernel verifier for safety and memory correctness, then loaded directly into the driver receive path.
 
 ---
 
@@ -225,15 +223,6 @@ cd /path/to/xdp-tutorial
 eval $(./testenv/testenv.sh alias)
 t teardown --name arptest
 ```
-
----
-
-## What's Next
-
-- Replace `bpf_printk` with a `BPF_MAP_TYPE_RINGBUF` for production-grade userspace event delivery
-- Add a Python userspace reader that polls the ring buffer and logs alerts to a file
-- Add `XDP_DROP` to actively block confirmed spoofing attempts
-- Extend detection to IPv6 NDP (Neighbor Discovery Protocol) — the IPv6 equivalent of ARP
 
 ---
 
