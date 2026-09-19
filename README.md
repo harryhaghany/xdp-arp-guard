@@ -8,9 +8,10 @@ An XDP kernel program that detects ARP spoofing attacks in real time by intercep
 
 Reading about ARP in *Computer Networks: A Top-Down Approach* (Kurose & Ross), I kept thinking about what the protocol actually assumes: that every device on a network has a unique MAC address, and that the ARP table is a source of truth. The question that formed in my head was simple: what actually happens if that assumption breaks?
 
-So I changed my laptop's MAC address to match another device on my home network and watched both connections fall apart in real time. The router couldn't decide where to send traffic. Both devices fought over the same identity.
+So I changed my laptop's MAC address to match another device on my home network and watched both connections fall apart in real time. The router couldn't decide where to send traffic. Both devices fought over the same identity
 
-That's ARP spoofing — the foundation of man-in-the-middle attacks. I then built the thing that would have caught me.
+P.S this really pissed off my flatmate who was on his XBOX (sorry about that Max) 
+
 
 ---
 
